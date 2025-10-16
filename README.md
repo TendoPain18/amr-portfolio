@@ -11,6 +11,3 @@ My personal portfolio built with Streamlit, showcasing my projects in Python, Ma
 ## 🛠️ Built With
 - Streamlit
 - Python 3
-
-## 📄 License
-MIT License
