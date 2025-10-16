@@ -32,16 +32,3 @@ elif page == "📞 Contact":
     st.write("📧 Email: your-email@example.com")
     st.write("[LinkedIn](https://linkedin.com/in/yourprofile)")
     st.write("[GitHub](https://github.com/YOUR_USERNAME)")
-```
-
-**Replace:**
-- `YOUR_USERNAME` with your actual GitHub username
-- `your-email@example.com` with your real email
-
----
-
-**File 2: `requirements.txt`**
-
-Just one line:
-```
-streamlit
