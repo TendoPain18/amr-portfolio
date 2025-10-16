@@ -5,42 +5,33 @@ st.set_page_config(page_title="Amr Ashraf | Portfolio", layout="wide")
 # Custom CSS for enhanced styling
 st.markdown("""
 <style>
-    /* Fixed Header */
-    header {
-        background: #1a1a2e !important;
-        border-bottom: 3px solid #16c784 !important;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+    /* Hide default header */
+    [data-testid="stDecoration"] {
+        display: none;
     }
     
-    .header-container {
+    /* Navigation in top bar */
+    .nav-container {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 40px;
-        background: #1a1a2e;
-        border-bottom: 3px solid #16c784;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        padding: 0;
+        margin: 0;
     }
     
-    .header-title {
+    .nav-title {
         font-size: 1.8em;
         font-weight: 700;
         color: #16c784;
-        margin: 0;
     }
     
     .nav-buttons {
         display: flex;
         gap: 15px;
-        flex-wrap: wrap;
     }
     
     .nav-btn {
-        padding: 10px 25px;
+        padding: 8px 20px;
         border: 2px solid #16c784;
         background: transparent;
         color: #16c784;
@@ -62,22 +53,7 @@ st.markdown("""
         color: #1a1a2e;
     }
     
-    /* Fixed Footer */
-    .footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #1a1a2e;
-        border-top: 3px solid #16c784;
-        padding: 20px 40px;
-        text-align: center;
-        color: #16c784;
-        font-weight: 600;
-        z-index: 999;
-    }
-    
-    /* Main content with footer padding */
+    /* Main content */
     .main {
         background: #0f0f1e;
         color: #e0e0e0;
@@ -104,15 +80,6 @@ st.markdown("""
     h3 {
         color: #16c784 !important;
         font-weight: 600;
-    }
-    
-    /* Streamlit text */
-    .stMarkdown {
-        color: #e0e0e0 !important;
-    }
-    
-    .stWrite {
-        color: #e0e0e0 !important;
     }
     
     /* Divider */
@@ -155,24 +122,50 @@ st.markdown("""
         font-size: 0.9em;
     }
     
-    /* Project cards */
-    .project-card {
+    /* Project Category Card */
+    .project-category {
         background: #16213e;
         border: 2px solid #16c784;
+        border-radius: 12px;
         padding: 20px;
-        margin: 20px 0;
-        border-radius: 8px;
         transition: all 0.3s ease;
+        cursor: pointer;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     
-    .project-card:hover {
+    .project-category:hover {
         background: #0f3460;
-        border-color: #16c784;
-        box-shadow: 0 0 20px rgba(22, 199, 132, 0.3);
+        box-shadow: 0 0 30px rgba(22, 199, 132, 0.4);
+        transform: translateY(-5px);
     }
     
-    .project-card h3 {
-        margin-top: 0;
+    .category-title {
+        color: #16c784 !important;
+        font-size: 1.3em;
+        font-weight: 600;
+        margin: 0 0 15px 0;
+        text-align: center;
+    }
+    
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .grid-image {
+        width: 100%;
+        aspect-ratio: 1;
+        background: #0f0f1e;
+        border: 2px dashed #16c784;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #16c784;
+        font-size: 2em;
     }
     
     /* Contact cards */
@@ -216,17 +209,6 @@ st.markdown("""
         border-color: #16c784 !important;
     }
     
-    /* Metric styling */
-    .metric-box {
-        background: #16213e;
-        border: 2px solid #16c784;
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        color: #16c784;
-        font-weight: 600;
-    }
-    
     /* Button styling */
     .stLinkButton > button {
         background: #16c784 !important;
@@ -239,6 +221,21 @@ st.markdown("""
     .stLinkButton > button:hover {
         background: #11a063 !important;
     }
+    
+    /* Fixed Footer */
+    .footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #1a1a2e;
+        border-top: 3px solid #16c784;
+        padding: 20px 40px;
+        text-align: center;
+        color: #16c784;
+        font-weight: 600;
+        z-index: 999;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -246,15 +243,8 @@ st.markdown("""
 if 'current_page' not in st.session_state:
     st.session_state.current_page = "Home"
 
-# Fixed Header with Navigation Buttons
-st.markdown("""
-<div class="header-container">
-    <div class="header-title">Amr Ashraf</div>
-</div>
-""", unsafe_allow_html=True)
-
-# Navigation buttons
-col1, col2, col3, col4 = st.columns(4)
+# Navigation using columns
+col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 2])
 
 with col1:
     if st.button("🏠 Home", use_container_width=True, key="btn_home"):
@@ -271,6 +261,9 @@ with col3:
 with col4:
     if st.button("📞 Contact", use_container_width=True, key="btn_contact"):
         st.session_state.current_page = "Contact"
+
+with col5:
+    st.markdown("<div style='text-align: right; padding-top: 8px; color: #16c784; font-weight: 600;'>Amr Ashraf</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -463,127 +456,161 @@ elif st.session_state.current_page == "About":
 # PROJECTS PAGE
 elif st.session_state.current_page == "Projects":
     st.title("🎯 Projects")
-    st.write("Explore my latest projects and technical work")
+    st.write("Click on any category to explore projects")
     st.markdown("---")
     
-    # Internet Traffic Forecasting
-    st.subheader("📊 Internet Traffic Forecasting")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Time Series Modeling for Network Load Prediction</h3>
-        <p>Time series forecasting project using advanced statistical methods to predict network traffic patterns.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Preprocessed time series data using STL decomposition and outlier handling</p>
-        <p>• Built forecasting models: HW-ETS, SARIMA, ARIMA-based ensemble</p>
-        <p>• Achieved best performance with HW-ETS (NRMSE: 10.07%)</p>
-        <p style="color: #999;"><strong>📅 04/2025 – 05/2025</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Project Categories with 2x3 Grid
+    col1, col2, col3 = st.columns(3)
     
-    # Smart Security System
-    st.subheader("🔒 Smart Security System")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Tiva C + ESP32 with FreeRTOS, Firebase, and Computer Vision</h3>
-        <p>IoT-based security system with real-time alerts and intelligent threat detection.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Developed FreeRTOS-based system with custom hardware-level APIs</p>
-        <p>• Motion and sound detection with real-time Firebase alerts</p>
-        <p>• Computer vision for face detection and human counting</p>
-        <p>• Automatic photo logging to Google Drive</p>
-        <p style="color: #999;"><strong>📅 04/2025</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Games Projects
+    with col1:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">🎮 Games Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Digital Wireless Communication System
-    st.subheader("📡 Digital Wireless Communication System")
-    st.markdown("""
-    <div class="project-card">
-        <h3>End-to-End USRP-Based Communication Using LabVIEW</h3>
-        <p>Full digital communication system implementation with over-the-air transmission.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Built with LabVIEW and USRP hardware</p>
-        <p>• Encoded messages (text, voice, video) using divide-and-conquer algorithms</p>
-        <p>• QPSK modulation for data transmission</p>
-        <p>• Real-time encoding/decoding capabilities</p>
-        <p style="color: #999;"><strong>📅 12/2024 – 01/2025</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # ML Projects
+    with col2:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">🤖 ML Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Digital Circuits Design
-    st.subheader("🔧 Digital Circuits Design Projects")
-    st.markdown("""
-    <div class="project-card">
-        <h3>ALU, SAP-1 Simulation, and Pipelined ARM Processor</h3>
-        <p>Low-level digital design projects from basic arithmetic to advanced processor architecture.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Designed 4-bit ALU in Logisim with 3-bit selector lines</p>
-        <p>• Implemented ALU in SystemVerilog</p>
-        <p>• Simulated SAP-1 architecture with fetch-decode-execute visualization</p>
-        <p>• Built pipelined ARM processor handling RAW, LDR, and control hazards</p>
-        <p style="color: #999;"><strong>📅 11/2024 – 12/2024</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # DL Projects
+    with col3:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">🧠 DL Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Neural Network for Tumor Detection
-    st.subheader("🧠 Neural Network for Tumor Detection")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Breast Cancer Detection with Neural Networks</h3>
-        <p>ML application for medical imaging analysis using microwave sensor data.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Developed neural network model for tumor classification</p>
-        <p>• Utilized microwave sensor data for non-invasive detection</p>
-        <p>• Benchmarked against PyCaret's automated ML tools</p>
-        <p>• High accuracy classification performance</p>
-        <p style="color: #999;"><strong>📅 11/2024</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("")
+    col1, col2, col3 = st.columns(3)
     
-    # Hotel Network System
-    st.subheader("🏨 Hotel Network System")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Multi-VLAN Enterprise Network Design in Cisco Packet Tracer</h3>
-        <p>Complex enterprise network design with departmental segregation and routing.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Multi-floor hotel network with IP subnetting</p>
-        <p>• VLAN configuration for department isolation</p>
-        <p>• DHCP and OSPF routing implementation</p>
-        <p>• Internal DNS and web servers with access controls</p>
-        <p style="color: #999;"><strong>📅 03/2024 – 04/2024</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Robotics Projects
+    with col1:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">🤖 Robotics Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # UWB Antenna Design
-    st.subheader("📶 UWB Microstrip Antenna Design")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Compact Ultra-Wideband Antenna for 5G and WLAN</h3>
-        <p>Antenna design and optimization for next-generation wireless communications.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Designed UWB antenna (3.28–6.38 GHz) using CST Studio Suite</p>
-        <p>• Performance tuning through DGS and slot modifications</p>
-        <p>• Optimized S-parameters and Farfield patterns</p>
-        <p>• Collaboration with original research paper authors</p>
-        <p style="color: #999;"><strong>📅 03/2024 – 04/2024</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # DSP Projects
+    with col2:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">📊 DSP Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
-    # Charity Website
-    st.subheader("💻 Charity Website and Database System")
-    st.markdown("""
-    <div class="project-card">
-        <h3>Web Application for Charitable Organization Management</h3>
-        <p>Full-stack web application for managing donations and beneficiaries.</p>
-        <p><strong>Key Highlights:</strong></p>
-        <p>• Built responsive UI with HTML5, CSS3, Bootstrap, and JavaScript</p>
-        <p>• CRUD operations for donations, beneficiaries, and volunteers</p>
-        <p>• User-friendly admin dashboard</p>
-        <p>• Focus on accessibility and usability</p>
-        <p style="color: #999;"><strong>📅 02/2023 – 04/2023</strong></p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Fabrication Projects
+    with col3:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">🔧 Fabrication Projects</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("")
+    col1, col2, col3 = st.columns(3)
+    
+    # Web Development Projects
+    with col1:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">💻 Web Development</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Embedded Systems
+    with col2:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">⚙️ Embedded Systems</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Network & Communication
+    with col3:
+        st.markdown("""
+        <div class="project-category">
+            <h3 class="category-title">📡 Networks & Comm</h3>
+            <div class="image-grid">
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+                <div class="grid-image">📷</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 # CONTACT PAGE
 elif st.session_state.current_page == "Contact":
