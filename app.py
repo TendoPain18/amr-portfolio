@@ -1,337 +1,316 @@
 import streamlit as st
 
-st.set_page_config(page_title="Amr Ashraf | Portfolio", layout="wide", initial_sidebar_state="expanded")
+st.set_page_config(page_title="Amr Ashraf | Portfolio", layout="wide")
 
 # Custom CSS for enhanced styling
 st.markdown("""
 <style>
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    /* Global Styles */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --text-color: #1a1a1a;
+        --bg-light: #f8f9fa;
     }
     
-    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
-        color: white;
-    }
-    
-    .css-1d391kg {
-        color: white;
-    }
-    
-    /* Radio button styling */
-    [role="radio"] {
-        accent-color: #667eea;
-    }
-    
-    /* Main background */
+    /* Main container */
     .main {
-        background: linear-gradient(to bottom, #f8f9fa, #ffffff);
-    }
-    
-    /* Title styling */
-    h1, h2, h3 {
-        color: #333333;
+        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
     }
     
     /* Card hover effect */
     .project-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform: translateY(0);
     }
     
     .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15) !important;
     }
+    
+    /* Title styling */
+    h1 {
+        color: #1a1a1a;
+        font-size: 3em;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    h2 {
+        color: #2d3748;
+        font-weight: 600;
+    }
+    
+    /* Button styling */
+    .stLinkButton > button {
+        border-radius: 10px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Sidebar styling */
+    .sidebar .stRadio > label {
+        font-size: 1.1em;
+        font-weight: 500;
+    }
+    
+    /* Contact cards */
+    .contact-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f7f7f7 100%);
+        border: 2px solid #e0e0e0;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .contact-card:hover {
+        border-color: #667eea;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        transform: translateY(-5px);
+    }
+    
+    /* Divider */
+    hr {
+        border: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #667eea, transparent);
+        margin: 2rem 0;
+    }
+    
 </style>
 """, unsafe_allow_html=True)
 
-# Enhanced Sidebar
-with st.sidebar:
-    st.markdown("<h1 style='text-align: center; color: white;'>🧠 Amr Ashraf</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align: center; color: white; font-size: 14px;'>Data Scientist & Developer</p>", unsafe_allow_html=True)
-    st.markdown("---")
-    
-    page = st.radio(
-        "Navigation",
-        ["🏠 Home", "🎮 Games", "🤖 ML Projects", "📞 Contact"],
-        label_visibility="collapsed"
-    )
-    
-    st.markdown("---")
-    st.markdown("<p style='color: white; font-size: 12px; text-align: center;'>© 2025 All Rights Reserved</p>", unsafe_allow_html=True)
+# Sidebar Navigation
+st.sidebar.title("🎯 Navigation")
+st.sidebar.markdown("---")
+page = st.sidebar.radio("Go to:", ["🏠 Home", "🎮 Games", "🤖 ML Projects", "📞 Contact"])
 
 # HOME PAGE
 if page == "🏠 Home":
-    col1, col2 = st.columns([2, 1])
-    
+    col1, col2 = st.columns([3, 1])
     with col1:
-        st.title("Welcome to My Portfolio 👋")
-        st.markdown("""
-        ### Hi, I'm **Amr Ashraf**
-        
-        I'm a passionate **Data Scientist** and **Python Developer** with expertise in:
-        - 🧠 **EEG Signal Processing** & Machine Learning
-        - 🎮 **Game Development** with Python
-        - 📊 **Data Analysis** & Visualization
-        - 🤖 **Deep Learning** & Neural Networks
-        
-        Explore my projects and feel free to reach out! 
+        st.title("Hi, I'm Amr Ashraf 👋")
+        st.write("""
+        Welcome to my portfolio!  
+        I'm a passionate **Data Scientist** skilled in **Python**, **Machine Learning**, and **Game Development**.  
+        Explore my creative projects and technical work below 👇
         """)
     
+    st.markdown("---")
+    st.subheader("✨ Quick Navigation")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.link_button("🎮 View Games", "#", use_container_width=True)
     with col2:
-        st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            color: white;
-        ">
-            <h3>📊 Quick Stats</h3>
-            <p><b>2</b> Game Projects</p>
-            <p><b>∞</b> Learning</p>
-            <p><b>100%</b> Passion</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.link_button("🤖 View ML Projects", "#", use_container_width=True)
+    with col3:
+        st.link_button("📧 Contact Me", "#", use_container_width=True)
     
     st.markdown("---")
-    st.subheader("Featured Projects")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
-        ">
-            <h3>💰 Millionaire Quiz Game</h3>
-            <p>Interactive Tkinter game with audio and graphics</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.link_button("View Project", "https://github.com/TendoPain18/millionaire-game", use_container_width=True)
-    
-    with col2:
-        st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 10px;
-            padding: 20px;
-            color: white;
-        ">
-            <h3>🧠 EEG Classifier</h3>
-            <p>Motor imagery classification with ML</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.link_button("View Project", "https://github.com/TendoPain18", use_container_width=True)
+    st.subheader("📊 About Me")
+    st.write("""
+    I'm dedicated to creating innovative solutions through data science and game development. 
+    With expertise in machine learning algorithms, neural networks, and interactive applications, 
+    I love turning ideas into reality.
+    """)
 
 # GAMES PAGE
 elif page == "🎮 Games":
     st.title("🎮 Game Projects")
+    st.markdown("Explore my interactive game creations")
     st.markdown("---")
     
-    col1, col2, col3 = st.columns(3, gap="large")
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
         ">
-            <h2>💰</h2>
-            <h3>Who Wants to Be a Millionaire</h3>
-            <p>Interactive Tkinter Quiz Game</p>
-            <p style="font-size: 12px; margin-top: 15px;">🎯 Fully Featured Game with Audio & Images</p>
+            <h2 style="margin: 0; font-size: 2em;">💰 Who Wants to Be a Millionaire</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Interactive Tkinter Quiz Game</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.link_button("📂 View Code on GitHub", "https://github.com/TendoPain18/millionaire-game", use_container_width=True)
+        st.link_button("🎮 Play Game", "https://YOUR_GAME_LINK.streamlit.app", use_container_width=True)
+        st.link_button("📂 View Code", "https://github.com/TendoPain18/millionaire-game", use_container_width=True)
     
     with col2:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
         ">
-            <h2>🎯</h2>
-            <h3>Game 2</h3>
-            <p>Coming Soon</p>
-            <p style="font-size: 12px; margin-top: 15px;">🚀 Exciting project in development</p>
+            <h2 style="margin: 0; font-size: 2em;">🎯 Coming Soon</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Game 2 - Stay Tuned!</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.info("Stay tuned for more games!", icon="⏳")
+        st.info("🚀 Coming soon...")
     
     with col3:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
         ">
-            <h2>🎨</h2>
-            <h3>Game 3</h3>
-            <p>Coming Soon</p>
-            <p style="font-size: 12px; margin-top: 15px;">🚀 Next big project</p>
+            <h2 style="margin: 0; font-size: 2em;">🎨 Coming Soon</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Game 3 - Stay Tuned!</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.info("More games coming soon!", icon="⏳")
+        st.info("🚀 Coming soon...")
 
 # ML PROJECTS PAGE
 elif page == "🤖 ML Projects":
     st.title("🤖 Machine Learning Projects")
+    st.markdown("Cutting-edge AI and ML applications")
     st.markdown("---")
     
-    col1, col2, col3 = st.columns(3, gap="large")
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(250, 112, 154, 0.3);
         ">
-            <h2>🧠</h2>
-            <h3>EEG Classifier</h3>
-            <p>Motor Imagery Classification</p>
-            <p style="font-size: 12px; margin-top: 15px;">CNN & Feature-based Models</p>
+            <h2 style="margin: 0; font-size: 2em;">🧠 EEG Classifier</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Motor Imagery Classification</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.link_button("📂 View Code", "https://github.com/TendoPain18", use_container_width=True)
+        st.link_button("🌐 Live Demo", "https://YOUR_EEG_APP.streamlit.app", use_container_width=True)
+        st.link_button("📂 View Code", "https://github.com/TendoPain18/eeg-classifier", use_container_width=True)
     
     with col2:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(48, 207, 208, 0.3);
         ">
-            <h2>📊</h2>
-            <h3>Project 2</h3>
-            <p>Coming Soon</p>
-            <p style="font-size: 12px; margin-top: 15px;">Next ML project</p>
+            <h2 style="margin: 0; font-size: 2em;">📊 Coming Soon</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Project 2 - Stay Tuned!</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.info("Coming soon...", icon="⏳")
+        st.info("🚀 Coming soon...")
     
     with col3:
         st.markdown("""
         <div style="
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 15px;
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 40px 30px;
             text-align: center;
-            min-height: 300px;
+            height: 320px;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(168, 237, 234, 0.3);
         ">
-            <h2>🤖</h2>
-            <h3>Project 3</h3>
-            <p>Coming Soon</p>
-            <p style="font-size: 12px; margin-top: 15px;">Future project</p>
+            <h2 style="margin: 0; font-size: 2em;">🤖 Coming Soon</h2>
+            <p style="margin-top: 15px; font-size: 1.05em; opacity: 0.95;">Project 3 - Stay Tuned!</p>
         </div>
         """, unsafe_allow_html=True)
         
-        st.info("More projects coming!", icon="⏳")
+        st.info("🚀 Coming soon...")
 
 # CONTACT PAGE
 elif page == "📞 Contact":
     st.title("📬 Get in Touch")
+    st.markdown("Feel free to reach out to me on any of these platforms:")
     st.markdown("---")
     
-    st.markdown("Feel free to reach out to me through any of these channels:")
-    st.markdown("")
-    
-    col1, col2, col3 = st.columns(3, gap="large")
+    col1, col2, col3 = st.columns(3)
     
     with col1:
         st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        ">
-            <h3>📧 Email</h3>
-            <p style="word-break: break-all;"><b>amr.gadalla01@gmail.com</b></p>
+        <div class="contact-card">
+            <h3 style="color: #667eea; margin-bottom: 15px;">📧 Email</h3>
+            <p style="font-size: 1.05em; color: #2d3748; word-break: break-all;">
+                <strong>amr.gadalla01@gmail.com</strong>
+            </p>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        ">
-            <h3>📱 Phone</h3>
-            <p><b>+201019702121</b></p>
+        <div class="contact-card">
+            <h3 style="color: #0077b5; margin-bottom: 15px;">💼 LinkedIn</h3>
+            <p>
+                <a href="https://www.linkedin.com/in/amrashraf18/" target="_blank" 
+                   style="color: #0077b5; text-decoration: none; font-weight: 600;">
+                   Visit Profile →
+                </a>
+            </p>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        <div style="
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        ">
-            <h3>💼 LinkedIn</h3>
-            <p><a href="https://www.linkedin.com/in/amrashraf18/" target="_blank" style="color: white; text-decoration: underline;"><b>View Profile</b></a></p>
+        <div class="contact-card">
+            <h3 style="color: #333; margin-bottom: 15px;">🐙 GitHub</h3>
+            <p>
+                <a href="https://github.com/TendoPain18" target="_blank" 
+                   style="color: #333; text-decoration: none; font-weight: 600;">
+                   Visit GitHub →
+                </a>
+            </p>
         </div>
         """, unsafe_allow_html=True)
     
@@ -340,7 +319,21 @@ elif page == "📞 Contact":
     col1, col2 = st.columns(2)
     
     with col1:
-        st.link_button("🐙 GitHub Profile", "https://github.com/TendoPain18", use_container_width=True)
+        st.markdown("""
+        <div class="contact-card">
+            <h3 style="color: #25d366; margin-bottom: 15px;">📱 Phone</h3>
+            <p style="font-size: 1.1em; color: #2d3748;">
+                <strong>+201019702121</strong>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        st.link_button("📧 Send Email", "mailto:amr.gadalla01@gmail.com", use_container_width=True)
+        st.markdown("""
+        <div class="contact-card">
+            <h3 style="color: #667eea; margin-bottom: 15px;">💬 Say Hello!</h3>
+            <p style="color: #666;">
+                Don't hesitate to reach out for collaborations or opportunities.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
